@@ -42,6 +42,24 @@ class _LoanSummaryPageState extends State<LoanSummaryPage> {
   String errorMessage = '';
   int repaymentMonths = 0;
 
+  String _localizeLoanReason(String? reason, AppLocalizations l10n) {
+    if (reason == null || reason.isEmpty) return l10n.haijulikani;
+    switch (reason) {
+      case 'kilimo':
+        return l10n.kilimo;
+      case 'maboresho_nyumba':
+        return l10n.maboresho_nyumba;
+      case 'elimu':
+        return l10n.elimu;
+      case 'biashara':
+        return l10n.biashara;
+      case 'sababu_nyingine':
+        return l10n.sababu_nyingine;
+      default:
+        return reason; // Return custom reason as-is
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -379,6 +397,7 @@ class _LoanSummaryPageState extends State<LoanSummaryPage> {
 
   Widget buildLoanReasonSection() {
     final l10n = AppLocalizations.of(context)!;
+    final localizedReason = _localizeLoanReason(reason, l10n);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -402,7 +421,7 @@ class _LoanSummaryPageState extends State<LoanSummaryPage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                reason.isNotEmpty ? reason : "Sababu haijafafanuliwa",
+                localizedReason.isNotEmpty ? localizedReason : l10n.haijulikani,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),

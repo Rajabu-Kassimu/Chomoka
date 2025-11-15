@@ -39,9 +39,9 @@ class _PigaFainiPageState extends State<PigaFainiPage> {
     try {
       final katibaModel = KatibaModel();
       final groupTypeData = await katibaModel
-          .where('katiba_key', '=', 'kanuni')
           .where('mzungukoId', '=', widget.mzungukoId)
-          .findOne();
+          .where('katiba_key', '=', 'kanuni')
+          .first();
 
       if (groupTypeData != null && groupTypeData is KatibaModel) {
         setState(() {
@@ -126,12 +126,10 @@ class _PigaFainiPageState extends State<PigaFainiPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("111111111111111111111111111111111111111111111111111111111111111111111");
     final filteredUsers = _filterUsers();
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      
       appBar: CustomAppBar(
         title: l10n.pigaFainiTitle,
         subtitle: l10n.pigaFainiSubtitle,

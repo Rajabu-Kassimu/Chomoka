@@ -26,7 +26,7 @@ class AttendanceModel extends BaseModel {
   Map<String, String> get columns => {
         'id': 'INTEGER PRIMARY KEY AUTOINCREMENT',
         'meeting_id': 'INTEGER NULLABLE',
-        'mzungukoId ': 'INTEGER NULLABLE',
+    'mzungukoId': 'INTEGER NULLABLE',
         'user_id': 'INTEGER NULLABLE',
         'attendance_status': 'TEXT NULLABLE',
         'sub_attendance_status': 'TEXT NULLABLE',

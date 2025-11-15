@@ -36,17 +36,25 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   @override
   void initState() {
-    super.initState();
-    _questions = [
-      'Mwanao wa kwanza amezaliwa mwaka gani?',
-      'Jina la kwanza la mwanao wa kwanza?',
-      'Umezaliwa mwaka gani?',
-    ];
+    // super.initState();
+    // _questions = [
+    //   'Mwanao wa kwanza amezaliwa mwaka gani?',
+    //   'Jina la kwanza la mwanao wa kwanza?',
+    //   'Umezaliwa mwaka gani?',
+    // ];
     _checkQuestionAndAnswer();
   }
 
   @override
   Widget build(BuildContext context) {
+    
+ if (_questions.isEmpty) {
+      _questions = [
+        AppLocalizations.of(context)!.securityQuestion1,
+        AppLocalizations.of(context)!.securityQuestion2,
+        AppLocalizations.of(context)!.securityQuestion3,
+      ];
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.selectKeyToReset,

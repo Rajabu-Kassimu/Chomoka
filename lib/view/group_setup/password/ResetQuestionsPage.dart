@@ -15,7 +15,7 @@ class SetQuestionPage extends StatefulWidget {
     required this.passwordId,
     required this.passwordNumber,
     required this.onQuestionSet,
-    this.groupId,
+    this.groupId,  
   });
 
   @override

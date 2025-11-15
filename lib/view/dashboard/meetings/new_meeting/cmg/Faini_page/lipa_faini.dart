@@ -286,7 +286,7 @@ class _LipaFainiPageState extends State<LipaFainiPage> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Container(
-                          width: 500,
+                          width: 600,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(

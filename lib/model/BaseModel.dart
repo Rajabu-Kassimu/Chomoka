@@ -8,8 +8,11 @@ import 'package:http/http.dart' as http;
 
 abstract class BaseModel {
   static Database? _database;
-  static final List<String> _wheres = [];
-  static final List<Object?> _whereArgs = [];
+  // Use instance-level where clauses and args to avoid cross-instance
+  // accumulation of WHERE conditions which previously caused queries
+  // for one model to include conditions intended for another model.
+  final List<String> _wheres = [];
+  final List<Object?> _whereArgs = [];
   static bool _isInitializing = false;
   static Future<void>? _initializationFuture;
 

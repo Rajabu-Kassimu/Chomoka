@@ -1342,7 +1342,9 @@
 
     "communityFundTitle" : "Mfuko jamii",
     "unpaidContribution": "Mchango ambao haujalipwa",
-
+    "meeting_completed_title": "Kikao kimekamilika",
+    "meeting_completed_message": "Kikao kimekamilika, Anza upya mfumo wa chomoka kuanza kikao kipya.",
+    "meeting_completed_button": "Ingia Tena",
     "expense": "Matumizi",
     "chooseUsageType": "Chagua aina ya matumizi",
     "usageType": "{type}",

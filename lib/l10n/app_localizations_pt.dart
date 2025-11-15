@@ -260,6 +260,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fines => 'Multas';
 
   @override
+  String get meeting_completed_title => 'Reunião Concluída';
+
+  @override
+  String get meeting_completed_message =>
+      'A reunião foi concluída. Reinicie o sistema Chomoka para iniciar uma nova sessão.';
+
+  @override
+  String get meeting_completed_button => 'Entrar Novamente';
+
+  @override
   String get lateness => 'Atraso';
 
   @override

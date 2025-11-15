@@ -63,9 +63,9 @@ class _MatumiziSummaryPageState extends State<MatumiziSummaryPage> {
     try {
       final katibaModel = KatibaModel();
       final groupTypeData = await katibaModel
-          .where('katiba_key', '=', 'kanuni')
           .where('mzungukoId', '=', widget.mzungukoId)
-          .findOne();
+          .where('katiba_key', '=', 'kanuni')
+          .first();
 
       if (groupTypeData != null && groupTypeData is KatibaModel) {
         setState(() {

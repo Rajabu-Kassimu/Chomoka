@@ -162,7 +162,7 @@ class _SelectFinesScreenState extends State<SelectFinesScreen> {
                         return CheckboxListTile(
                           title: Text(fine.penaltiesName ?? l10n.undefinedFine),
                           subtitle:
-                              Text("Bei: " + formatCurrency(double.tryParse(fine.penaltiesPrice ?? '0') ?? 0, Provider.of<CurrencyProvider>(context).currencyCode)),
+                              Text( l10n.amount + " " + formatCurrency(double.tryParse(fine.penaltiesPrice ?? '0') ?? 0, Provider.of<CurrencyProvider>(context).currencyCode)),
                           value: selectedFineId == fine.id,
                           onChanged: (value) {
                             if (value == true) {

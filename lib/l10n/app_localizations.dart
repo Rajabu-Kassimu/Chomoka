@@ -552,6 +552,24 @@ abstract class AppLocalizations {
   /// **'Fines'**
   String get fines;
 
+  /// No description provided for @meeting_completed_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting Completed'**
+  String get meeting_completed_title;
+
+  /// No description provided for @meeting_completed_message.
+  ///
+  /// In en, this message translates to:
+  /// **'The meeting has been completed. Restart the Chomoka system to begin a new session.'**
+  String get meeting_completed_message;
+
+  /// No description provided for @meeting_completed_button.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Again'**
+  String get meeting_completed_button;
+
   /// No description provided for @lateness.
   ///
   /// In en, this message translates to:

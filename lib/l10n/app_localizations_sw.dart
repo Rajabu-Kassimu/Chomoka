@@ -258,6 +258,16 @@ class AppLocalizationsSw extends AppLocalizations {
   String get fines => 'Faini';
 
   @override
+  String get meeting_completed_title => 'Kikao kimekamilika';
+
+  @override
+  String get meeting_completed_message =>
+      'Kikao kimekamilika, Anza upya mfumo wa chomoka kuanza kikao kipya.';
+
+  @override
+  String get meeting_completed_button => 'Ingia Tena';
+
+  @override
   String get lateness => 'Kachelewa';
 
   @override

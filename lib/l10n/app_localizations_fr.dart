@@ -261,6 +261,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fines => 'Amendes';
 
   @override
+  String get meeting_completed_title => 'Réunion Terminée';
+
+  @override
+  String get meeting_completed_message =>
+      'La réunion est terminée. Redémarrez le système Chomoka pour commencer une nouvelle session.';
+
+  @override
+  String get meeting_completed_button => 'Se Connecter à Nouveau';
+
+  @override
   String get lateness => 'Arrivée tardive';
 
   @override

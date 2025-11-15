@@ -1641,24 +1641,24 @@ void _showLastMeetingCompleteDialog(
       contentPadding: const EdgeInsets.all(16),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(
+        children: [
+          const Icon(
             Icons.warning_amber_rounded, // Warning icon
             color: Colors.orange,
             size: 32,
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(
-            'Kikao kimekamilika', // Title
-            style: TextStyle(
+            AppLocalizations.of(context)!.meeting_completed_title, // Title
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
         ],
       ),
-      content: const Text(
-        'Kikao kimekamilika, Anza upya mfumo wa chomoka kuanza kikao kipya.', // Message
+      content:  Text(
+            AppLocalizations.of(context)!.meeting_completed_message, // Title
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 16,
@@ -1667,7 +1667,7 @@ void _showLastMeetingCompleteDialog(
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,
-      actionsPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      actionsPadding:  EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       actions: [
         SizedBox(
           width: double.infinity,
@@ -1691,8 +1691,8 @@ void _showLastMeetingCompleteDialog(
               ),
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
             ),
-            child: const Text(
-              'Ingia Tena', // Updated button text
+            child: Text(
+            AppLocalizations.of(context)!.meeting_completed_button, // Title
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
