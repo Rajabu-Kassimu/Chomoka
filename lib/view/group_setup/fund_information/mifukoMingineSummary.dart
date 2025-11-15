@@ -180,6 +180,28 @@ class _mifukominginesummaryState extends State<mifukominginesummary> {
     return value ?? 'N/A';
   }
 
+  String _localizeFundGoal(String? goal, AppLocalizations l10n) {
+    if (goal == null || goal.isEmpty) return l10n.haijulikani;
+    switch (goal) {
+      case 'Elimu':
+        return l10n.education;
+      case 'Kilimo':
+        return l10n.agriculture;
+      case 'Mradi jamii':
+        return l10n.communityProject;
+      case 'Cocoa':
+        return l10n.cocoa;
+      default:
+        return goal; // Return custom goal as-is
+    }
+  }
+
+  String _localizeLoanable(String? value, AppLocalizations l10n) {
+    if (value == null || value.isEmpty) return 'No';
+    if (value == 'Zinakopesheka') return 'Yes';
+    return value;
+  }
+
   void _showDeleteConfirmation() {
     final localizations = AppLocalizations.of(context)!;
     showDialog(
@@ -391,7 +413,7 @@ class _mifukominginesummaryState extends State<mifukominginesummary> {
                         },
                         {
                           'description': localizations.fundGoals,
-                          'value': _safeGetField(_record!.goal)
+                          'value': _localizeFundGoal(_record!.goal, localizations)
                         },
                         {
                           'description': localizations.withdrawalType,
@@ -403,7 +425,7 @@ class _mifukominginesummaryState extends State<mifukominginesummary> {
                         },
                         {
                           'description': localizations.loanable,
-                          'value': _safeGetField(_record!.unakopesheka)
+                          'value': _localizeLoanable(_record!.unakopesheka, localizations)
                         },
                       ],
                     ),
