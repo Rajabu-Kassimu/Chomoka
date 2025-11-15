@@ -25,6 +25,31 @@ class _MatumiziSummaryPageState extends State<MatumiziSummaryPage> {
   bool isLoading = true;
   String _groupType = ''; // Add this property
 
+  String _localizeMatumiziItem(String item, AppLocalizations l10n) {
+    switch (item) {
+      case "Shajara (Stationery)":
+        return l10n.matumziStationery;
+      case "Viburudisho":
+        return l10n.matumziRefreshment;
+      case "Malipo ya mkopo":
+        return l10n.matumziLoanPayment;
+      case "Muda wa maongezi (Vocha)":
+        return l10n.matumziCallTime;
+      case "Teknolojia":
+        return l10n.matumziTechnology;
+      case "Bidhaa za Biashara":
+        return l10n.matumiziMerchandise;
+      case "Usafiri":
+        return l10n.matumziTransport;
+      case "Gharama za Benki":
+        return l10n.matumiziBackCharges;
+      case "Mengineyo":
+        return l10n.matumziOther;
+      default:
+        return item;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -158,6 +183,7 @@ class _MatumiziSummaryPageState extends State<MatumiziSummaryPage> {
                             itemCount: _matumiziDetails.length,
                             itemBuilder: (context, index) {
                               final matumizi = _matumiziDetails[index];
+                              final localizedCategory = _localizeMatumiziItem(matumizi['matumiziCategory'] ?? '', l10n);
                               return Card(
                                 margin: const EdgeInsets.symmetric(vertical: 8),
                                 elevation: 4,
@@ -178,7 +204,7 @@ class _MatumiziSummaryPageState extends State<MatumiziSummaryPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        l10n.expenseType(matumizi['matumiziCategory'] ?? l10n.unknown),
+                                        l10n.expenseType(localizedCategory),
                                         style: const TextStyle(fontSize: 14),
                                       ),
                                       const SizedBox(height: 4),

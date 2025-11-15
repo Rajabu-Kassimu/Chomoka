@@ -35,6 +35,31 @@ class _AinaMatumiziPageState extends State<AinaMatumiziPage> {
     "Mengineyo"
   ];
 
+  String _localizeMatumiziItem(String item, AppLocalizations l10n) {
+    switch (item) {
+      case "Shajara (Stationery)":
+        return l10n.matumziStationery;
+      case "Viburudisho":
+        return l10n.matumziRefreshment;
+      case "Malipo ya mkopo":
+        return l10n.matumziLoanPayment;
+      case "Muda wa maongezi (Vocha)":
+        return l10n.matumziCallTime;
+      case "Teknolojia":
+        return l10n.matumziTechnology;
+      case "Bidhaa za Biashara":
+        return l10n.matumiziMerchandise;
+      case "Usafiri":
+        return l10n.matumziTransport;
+      case "Gharama za Benki":
+        return l10n.matumiziBackCharges;
+      case "Mengineyo":
+        return l10n.matumziOther;
+      default:
+        return item;
+    }
+  }
+
   void _navigateToNextPage() {
     setState(() {
       specificUsageError = specificUsageController.text.isEmpty
@@ -91,11 +116,12 @@ class _AinaMatumiziPageState extends State<AinaMatumiziPage> {
                 itemCount: matumiziItems.length,
                 itemBuilder: (context, index) {
                   final item = matumiziItems[index];
+                  final localizedItem = _localizeMatumiziItem(item, l10n);
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       RadioListTile<String>(
-                        title: Text(l10n.usageType(item)),
+                        title: Text(localizedItem),
                         value: item,
                         groupValue: selectedOption,
                         onChanged: (String? value) {

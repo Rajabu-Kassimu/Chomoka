@@ -2405,7 +2405,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groupAttendance => 'Check Attendance';
 
   @override
-  String get contributeMfukoJamii => 'Contribute to Social Fund';
+  String get contributeMfukoJamii => 'Contribute to Community Fund';
 
   @override
   String get buyShares => 'Buy Shares';
@@ -3062,6 +3062,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String usageType(Object type) {
     return '$type';
   }
+
+  @override
+  String get matumziStationery => 'Stationery';
+
+  @override
+  String get matumziRefreshment => 'Refreshment';
+
+  @override
+  String get matumziLoanPayment => 'Loan Payment';
+
+  @override
+  String get matumziCallTime => 'Call Time (Vocha)';
+
+  @override
+  String get matumziTechnology => 'Technology';
+
+  @override
+  String get matumiziMerchandise => 'Business Merchandise';
+
+  @override
+  String get matumziTransport => 'Transport';
+
+  @override
+  String get matumiziBackCharges => 'Bank Charges';
+
+  @override
+  String get matumziOther => 'Other';
 
   @override
   String get specificUsage => 'Specific Usage';

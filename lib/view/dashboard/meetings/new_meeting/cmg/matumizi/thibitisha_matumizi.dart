@@ -28,9 +28,35 @@ class ThibitishaMatumiziPage extends StatefulWidget {
 }
 
 class _ThibitishaMatumiziPageState extends State<ThibitishaMatumiziPage> {
+  String _localizeMatumiziItem(String item, AppLocalizations l10n) {
+    switch (item) {
+      case "Shajara (Stationery)":
+        return l10n.matumziStationery;
+      case "Viburudisho":
+        return l10n.matumziRefreshment;
+      case "Malipo ya mkopo":
+        return l10n.matumziLoanPayment;
+      case "Muda wa maongezi (Vocha)":
+        return l10n.matumziCallTime;
+      case "Teknolojia":
+        return l10n.matumziTechnology;
+      case "Bidhaa za Biashara":
+        return l10n.matumiziMerchandise;
+      case "Usafiri":
+        return l10n.matumziTransport;
+      case "Gharama za Benki":
+        return l10n.matumiziBackCharges;
+      case "Mengineyo":
+        return l10n.matumziOther;
+      default:
+        return item;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final localizedCategory = _localizeMatumiziItem(widget.matumiziCategory, l10n);
     print(widget.mzungukoId);
     return Scaffold(
       appBar: CustomAppBar(
@@ -51,7 +77,7 @@ class _ThibitishaMatumiziPageState extends State<ThibitishaMatumiziPage> {
             Card(
               child: ListTile(
                 title: Text(l10n.expenseTypeLabel.toString()),
-                subtitle: Text(widget.matumiziCategory),
+                subtitle: Text(localizedCategory),
               ),
             ),
             Card(
@@ -80,6 +106,7 @@ class _ThibitishaMatumiziPageState extends State<ThibitishaMatumiziPage> {
   }
 
   Future<void> _saveData() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Save data to the database
       final newMatumizi = MatumiziModel(
@@ -95,7 +122,7 @@ class _ThibitishaMatumiziPageState extends State<ThibitishaMatumiziPage> {
       await newMatumizi.create();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Matumizi yamefanikiwa!")),
+        SnackBar(content: Text(l10n.dataSavedSuccessfully)),
       );
 
       Navigator.pushReplacement(
@@ -110,7 +137,7 @@ class _ThibitishaMatumiziPageState extends State<ThibitishaMatumiziPage> {
     } catch (e) {
       print('Error saving Matumizi: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Imeshindikana kuhifadhi matumizi.")),
+        SnackBar(content: Text(l10n.errorSavingDataGeneric)),
       );
     }
   }

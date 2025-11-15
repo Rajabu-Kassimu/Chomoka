@@ -3127,6 +3127,33 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get matumziStationery => 'Papeterie';
+
+  @override
+  String get matumziRefreshment => 'Rafraîchissements';
+
+  @override
+  String get matumziLoanPayment => 'Paiement du Prêt';
+
+  @override
+  String get matumziCallTime => 'Temps d\'appel (Vocha)';
+
+  @override
+  String get matumziTechnology => 'Technologie';
+
+  @override
+  String get matumiziMerchandise => 'Marchandises Commerciales';
+
+  @override
+  String get matumziTransport => 'Transport';
+
+  @override
+  String get matumiziBackCharges => 'Frais Bancaires';
+
+  @override
+  String get matumziOther => 'Autres';
+
+  @override
   String get specificUsage => 'Utilisation spécifique';
 
   @override

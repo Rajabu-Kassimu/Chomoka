@@ -4594,7 +4594,7 @@ abstract class AppLocalizations {
   /// No description provided for @contributeMfukoJamii.
   ///
   /// In en, this message translates to:
-  /// **'Contribute to Social Fund'**
+  /// **'Contribute to Community Fund'**
   String get contributeMfukoJamii;
 
   /// No description provided for @buyShares.
@@ -5766,6 +5766,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{type}'**
   String usageType(Object type);
+
+  /// No description provided for @matumziStationery.
+  ///
+  /// In en, this message translates to:
+  /// **'Stationery'**
+  String get matumziStationery;
+
+  /// No description provided for @matumziRefreshment.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshment'**
+  String get matumziRefreshment;
+
+  /// No description provided for @matumziLoanPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Loan Payment'**
+  String get matumziLoanPayment;
+
+  /// No description provided for @matumziCallTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Call Time (Vocha)'**
+  String get matumziCallTime;
+
+  /// No description provided for @matumziTechnology.
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get matumziTechnology;
+
+  /// No description provided for @matumiziMerchandise.
+  ///
+  /// In en, this message translates to:
+  /// **'Business Merchandise'**
+  String get matumiziMerchandise;
+
+  /// No description provided for @matumziTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get matumziTransport;
+
+  /// No description provided for @matumiziBackCharges.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Charges'**
+  String get matumiziBackCharges;
+
+  /// No description provided for @matumziOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get matumziOther;
 
   /// No description provided for @specificUsage.
   ///

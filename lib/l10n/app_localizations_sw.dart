@@ -3087,6 +3087,33 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
+  String get matumziStationery => 'Shajara';
+
+  @override
+  String get matumziRefreshment => 'Viburudisho';
+
+  @override
+  String get matumziLoanPayment => 'Malipo ya Mkopo';
+
+  @override
+  String get matumziCallTime => 'Muda wa Maongezi (Vocha)';
+
+  @override
+  String get matumziTechnology => 'Teknolojia';
+
+  @override
+  String get matumiziMerchandise => 'Bidhaa za Biashara';
+
+  @override
+  String get matumziTransport => 'Usafiri';
+
+  @override
+  String get matumiziBackCharges => 'Gharama za Benki';
+
+  @override
+  String get matumziOther => 'Mengineyo';
+
+  @override
   String get specificUsage => 'Matumizi Husika';
 
   @override
