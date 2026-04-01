@@ -38,8 +38,8 @@ class _GroupInstitutionState extends State<GroupInstitution> {
     DropdownMenuItem(value: 'WWF', child: Text('WWF')),
     DropdownMenuItem(value: 'CODERT', child: Text('CODERT')),
     DropdownMenuItem(value: 'RLabs', child: Text('RLabs')),
-    DropdownMenuItem(
-        value: 'Restless Development', child: Text('Restless Development')),
+    DropdownMenuItem(value: 'Restless Development', child: Text('Restless Development')),
+    DropdownMenuItem(value: 'SNV Kenya', child: Text('SNV Kenya')),
     DropdownMenuItem(value: 'Nyingine', child: Text(AppLocalizations.of(context)!.other,)),
     DropdownMenuItem(value: 'Hakuna', child: Text(AppLocalizations.of(context)!.none,)),
   ];
@@ -82,6 +82,10 @@ class _GroupInstitutionState extends State<GroupInstitution> {
       DropdownMenuItem(value: 'Land for Life', child: Text('Land for Life')),
       DropdownMenuItem(value: 'RUMAKI', child: Text('RUMAKI')),
       DropdownMenuItem(value: 'Nyingine', child: Text('Nyingine')),
+    ],
+    'SNV Kenya': [
+      DropdownMenuItem(value: 'EKYAN', child: Text('EKYAN')),
+      DropdownMenuItem(value: 'Nyingine', child: Text(AppLocalizations.of(context)!.other)),
     ],
   };
 
@@ -135,7 +139,11 @@ class _GroupInstitutionState extends State<GroupInstitution> {
 
           // Set project name if it exists
           if (data.projectName != null) {
-            if (organizationProjects.containsKey(_selectedOrganization)) {
+            if (_selectedOrganization == 'Helvetas' ||
+                _selectedOrganization == 'CARE' ||
+                _selectedOrganization == 'Restless Development' ||
+                _selectedOrganization == 'WWF' ||
+                _selectedOrganization == 'SNV Kenya') {
               // Check if the project exists in the predefined list
               bool projectInList = organizationProjects[_selectedOrganization]!
                   .any((item) => item.value == data.projectName);
@@ -192,7 +200,8 @@ class _GroupInstitutionState extends State<GroupInstitution> {
         } else if (_selectedOrganization == 'Helvetas' ||
             _selectedOrganization == 'CARE' ||
             _selectedOrganization == 'Restless Development' ||
-            _selectedOrganization == 'WWF') {
+            _selectedOrganization == 'WWF' ||
+            _selectedOrganization == 'SNV Kenya') {
           projectToSave = _selectedProject == 'Nyingine'
               ? _projectNameController.text
               : _selectedProject ?? '';
@@ -309,7 +318,8 @@ class _GroupInstitutionState extends State<GroupInstitution> {
                       if (_selectedOrganization == 'Helvetas' ||
                           _selectedOrganization == 'CARE' ||
                           _selectedOrganization == 'Restless Development' ||
-                          _selectedOrganization == 'WWF')
+                          _selectedOrganization == 'WWF' ||
+                          _selectedOrganization == 'SNV Kenya')
                         CustomDropdown<String>(
                           labelText:
                               AppLocalizations.of(context)!.selectProject,
@@ -326,7 +336,8 @@ class _GroupInstitutionState extends State<GroupInstitution> {
                                 _selectedOrganization == 'CARE' ||
                                 _selectedOrganization ==
                                     'Restless Development' ||
-                                _selectedOrganization == 'WWF') {
+                                _selectedOrganization == 'WWF' ||
+                                _selectedOrganization == 'SNV Kenya') {
                               if (value == null || value.isEmpty) {
                                 return AppLocalizations.of(context)!
                                     .pleaseSelectProject;
@@ -344,11 +355,13 @@ class _GroupInstitutionState extends State<GroupInstitution> {
                                   _selectedOrganization == 'CARE' ||
                                   _selectedOrganization ==
                                       'Restless Development' ||
-                                  _selectedOrganization == 'WWF')) ||
+                                  _selectedOrganization == 'WWF' ||
+                                  _selectedOrganization == 'SNV Kenya')) ||
                           (_selectedOrganization != 'Helvetas' &&
                               _selectedOrganization != 'CARE' &&
                               _selectedOrganization != 'Restless Development' &&
                               _selectedOrganization != 'WWF' &&
+                              _selectedOrganization != 'SNV Kenya' &&
                               _selectedOrganization != 'Nyingine' &&
                               _selectedOrganization != 'Hakuna' &&
                               _selectedOrganization != null))
@@ -365,9 +378,11 @@ class _GroupInstitutionState extends State<GroupInstitution> {
                           validator: (value) {
                             if ((_selectedProject == 'Nyingine' &&
                                     (_selectedOrganization == 'Helvetas' ||
-                                        _selectedOrganization == 'CARE')) ||
+                                        _selectedOrganization == 'CARE' ||
+                                        _selectedOrganization == 'SNV Kenya')) ||
                                 (_selectedOrganization != 'Helvetas' &&
                                     _selectedOrganization != 'CARE' &&
+                                    _selectedOrganization != 'SNV Kenya' &&
                                     _selectedOrganization != 'Nyingine' &&
                                     _selectedOrganization != null)) {
                               if (value == null || value.isEmpty) {

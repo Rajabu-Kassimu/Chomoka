@@ -20,7 +20,7 @@ class LanguageProvider with ChangeNotifier {
   }
 
   Future<void> setLocale(Locale locale) async {
-    if (!['sw', 'en', 'fr', 'pt'].contains(locale.languageCode)) return;
+    if (!['sw', 'en', 'fr', 'pt', 'ar'].contains(locale.languageCode)) return;
     
     _locale = locale;
     final prefs = await SharedPreferences.getInstance();

@@ -33,7 +33,8 @@ class _RegionDistrictWardPageState extends State<RegionDistrictWardPage> {
     {'name': 'Kiswahili', 'code': 'sw'},
     {'name': 'English', 'code': 'en'},
     {'name': 'Français', 'code': 'fr'},
-    {'name': 'Português', 'code': 'pt'}
+    {'name': 'Português', 'code': 'pt'},
+    {'name': 'العربية', 'code': 'ar'}
   ];
 
   String selectedLanguage = 'sw';

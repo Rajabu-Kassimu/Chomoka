@@ -28,10 +28,17 @@ class _SettingsPageState extends State<SettingsPage> {
     "Kiswahili": "sw",
     "English": "en",
     "Français": "fr",
-    "Português": "pt"
+    "Português": "pt",
+    "العربية": "ar"
   };
 
-  final List<String> _languages = ["Kiswahili", "English", "Français", "Português"];
+  final List<String> _languages = [
+    "Kiswahili",
+    "English",
+    "Français",
+    "Português",
+    "العربية"
+  ];
 
   @override
   void initState() {
