@@ -690,7 +690,7 @@ class _VslaMeetingSummaryPageState extends State<VslaMeetingSummaryPage> {
                 _buildRowItem(
                   icon: Icons.monetization_on,
                   label: l10n!.totalSharesDeposited,
-                  amount: formatCurrency(_totalShares, Provider.of<CurrencyProvider>(context).currencyCode),
+                  amount: _totalShares.toStringAsFixed(0),
                   color: Colors.blue,
                 ),
                 _buildRowItem(

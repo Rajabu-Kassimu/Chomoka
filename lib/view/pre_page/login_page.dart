@@ -8,6 +8,7 @@ import 'package:chomoka/view/group_setup/password/reset_password_page.dart';
 import 'package:chomoka/view/pre_page/setting.dart';
 import 'package:chomoka/widget/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:chomoka/l10n/app_localizations.dart';
 
 
@@ -205,30 +206,51 @@ class _LoginPageState extends State<LoginPage> {
                 TextField(
                   controller: _key1Controller,
                   obscureText: true,
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(4),
+                  ],
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock, color: Colors.black),
                     labelText: _localizations.enterKey1,
                     border: InputBorder.none,
+                    counterText: "",
                   ),
                 ),
                 Divider(),
                 TextField(
                   controller: _key2Controller,
                   obscureText: true,
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(4),
+                  ],
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock, color: Colors.black),
                     labelText: _localizations.enterKey2,
                     border: InputBorder.none,
+                    counterText: "",
                   ),
                 ),
                 Divider(),
                 TextField(
                   controller: _key3Controller,
                   obscureText: true,
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(4),
+                  ],
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock, color: Colors.black),
                     labelText: _localizations.enterKey3,
                     border: InputBorder.none,
+                    counterText: "",
                   ),
                 ),
                 if (errorMessage != null)
