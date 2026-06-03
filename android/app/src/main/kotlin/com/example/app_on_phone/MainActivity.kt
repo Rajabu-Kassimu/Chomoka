@@ -1,4 +1,4 @@
-package com.example.app_on_phone
+package com.chomokaplus
 
 import io.flutter.embedding.android.FlutterActivity
 
