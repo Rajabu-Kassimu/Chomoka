@@ -159,6 +159,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get passwordSetupComplete => 'Uwekaji wa funguo umekamilika!';
 
   @override
+  String get completePreviousStepFirst =>
+      'Tafadhali kamilisha hatua iliyotangulia kwanza.';
+
+  @override
   String get finished => 'Nimemaliza';
 
   @override

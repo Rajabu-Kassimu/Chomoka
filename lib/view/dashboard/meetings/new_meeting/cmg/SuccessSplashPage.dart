@@ -82,48 +82,53 @@ class _SuccessSplashPageState extends State<SuccessSplashPage>
       statusMessage = l10n.dataSavedSuccessfully;
     });
 
+    // Start the success animation immediately so the rendering surface stays active
+    _animationController.forward();
+
+    // Allow the animation to begin before running heavy sync operations
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (!mounted) return;
+
     // Check for internet connection
     bool hasInternet = await _checkInternetConnection();
+    if (!mounted) return;
 
     if (hasInternet) {
       // If internet is available, sync data
-      setState(() {
-        statusMessage = l10n.dataSavedSuccessfully;
-      });
-
       try {
         var syncdt = Syncdata();
         await syncdt.syncAllTables();
+        if (!mounted) return;
 
         setState(() {
           statusMessage = l10n.dataSavedSuccessfully;
         });
       } catch (e) {
         print("Error syncing data: $e");
+        if (!mounted) return;
         setState(() {
           statusMessage = l10n.dataSavedSuccessfully;
         });
       }
-    } else {
-      // If no internet, just show saved message
-      setState(() {
-        statusMessage = l10n.dataSavedSuccessfully;
-      });
     }
 
-    // Continue with animation after sync attempt
-    await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
+
     setState(() {
       showLoader = false;
       isSyncing = false;
     });
 
-    _animationController.forward();
     _navigateAfterDelay();
   }
 
   void _navigateAfterDelay() async {
     await Future.delayed(const Duration(seconds: 3));
+    if (!mounted) return;
+
+    // Stop the animation before navigating to avoid rendering conflicts
+    _animationController.stop();
+
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
@@ -135,6 +140,7 @@ class _SuccessSplashPageState extends State<SuccessSplashPage>
 
   @override
   void dispose() {
+    _animationController.stop();
     _animationController.dispose();
     super.dispose();
   }

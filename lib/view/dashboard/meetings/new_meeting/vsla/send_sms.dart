@@ -558,10 +558,14 @@ class _SendSmsState extends State<SendSms> {
       // }
 
       if (existingMeeting?.toMap()['status'] == 'complete') {
-        Navigator.pop(context); // Remove loading indicator
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.failedToCloseMeeting)),
-        );
+        if (Navigator.of(context).canPop()) {
+          Navigator.pop(context); // Remove loading indicator
+        }
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.failedToCloseMeeting)),
+          );
+        }
         return;
       }
 
@@ -617,6 +621,9 @@ class _SendSmsState extends State<SendSms> {
 
       Navigator.pop(context); // Remove loading indicator
 
+      // Brief delay to allow the rendering surface to settle after dialog dismiss
+      await Future.delayed(const Duration(milliseconds: 300));
+
       if (effectiveRowsUpdated > 0) {
         // Successfully closed the meeting, navigate to success page
         Navigator.pushAndRemoveUntil(
@@ -639,7 +646,9 @@ class _SendSmsState extends State<SendSms> {
       }
     } catch (e) {
       // Make sure to remove loading indicator if there's an error
-      Navigator.of(context).pop();
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
       print('Error closing meeting: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

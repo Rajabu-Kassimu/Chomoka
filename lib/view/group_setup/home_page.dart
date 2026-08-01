@@ -306,6 +306,91 @@ class _homePageState extends State<homePage> {
     }
   }
 
+  void _showPrerequisiteDialog(String stepName) {
+    final loc = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        title: Row(
+          children: [
+            const Icon(Icons.lock_outline,
+                color: Color.fromARGB(255, 243, 188, 7), size: 28),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                loc.pleaseNote,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(),
+            const SizedBox(height: 8),
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black87,
+                  height: 1.5,
+                ),
+                children: [
+                  TextSpan(
+                    text: loc.completePreviousStepFirst,
+                  ),
+                  const TextSpan(text: '\n\n'),
+                  TextSpan(
+                    text: '"$stepName"',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 42, 39, 241),
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        actions: [
+          SizedBox(
+            width: double.infinity,
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromARGB(255, 42, 39, 241)),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero),
+                ),
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 14)),
+              ),
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(
+                loc.ok,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -392,6 +477,9 @@ class _homePageState extends State<homePage> {
                           ),
                         );
                       }
+                    } else {
+                      _showPrerequisiteDialog(
+                          AppLocalizations.of(context)!.groupInfo);
                     }
                   },
                 ),
@@ -406,7 +494,7 @@ class _homePageState extends State<homePage> {
                   title: AppLocalizations.of(context)!.constitutionInfo,
                   mark: isKatibaComplete ? 'completed' : 'pending',
                   onTap: () {
-                    if (isGroupInfoComplete && isMemberInfoComplete)
+                    if (isGroupInfoComplete && isMemberInfoComplete) {
                       isKatibaComplete
                           ? Navigator.push(
                               context,
@@ -423,6 +511,13 @@ class _homePageState extends State<homePage> {
                                         groupId: widget.data_id,
                                       )),
                             );
+                    } else {
+                      final loc = AppLocalizations.of(context)!;
+                      final missingStep = !isGroupInfoComplete
+                          ? loc.groupInfo
+                          : loc.memberInfo;
+                      _showPrerequisiteDialog(missingStep);
+                    }
                   },
                 ),
 
@@ -437,7 +532,7 @@ class _homePageState extends State<homePage> {
                   onTap: () {
                     if (isGroupInfoComplete &&
                         isMemberInfoComplete &&
-                        isKatibaComplete)
+                        isKatibaComplete) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -446,6 +541,15 @@ class _homePageState extends State<homePage> {
                       ).then((_) {
                         _loadMifukoJamiiStatus();
                       });
+                    } else {
+                      final loc = AppLocalizations.of(context)!;
+                      final missingStep = !isGroupInfoComplete
+                          ? loc.groupInfo
+                          : !isMemberInfoComplete
+                              ? loc.memberInfo
+                              : loc.constitutionInfo;
+                      _showPrerequisiteDialog(missingStep);
+                    }
                   },
                 ),
 
@@ -462,7 +566,7 @@ class _homePageState extends State<homePage> {
                       if (isGroupInfoComplete &&
                           isMemberInfoComplete &&
                           isKatibaComplete &&
-                          isMifukoInfoComplete)
+                          isMifukoInfoComplete) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -472,6 +576,17 @@ class _homePageState extends State<homePage> {
                         ).then((_) {
                           _checkPasswordCompletionStatus();
                         });
+                      } else {
+                        final loc = AppLocalizations.of(context)!;
+                        final missingStep = !isGroupInfoComplete
+                            ? loc.groupInfo
+                            : !isMemberInfoComplete
+                                ? loc.memberInfo
+                                : !isKatibaComplete
+                                    ? loc.constitutionInfo
+                                    : loc.fundInfo;
+                        _showPrerequisiteDialog(missingStep);
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

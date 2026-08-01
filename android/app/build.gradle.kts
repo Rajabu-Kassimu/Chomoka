@@ -32,7 +32,7 @@ android {
         applicationId = "com.chomokaplus"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = 2
+        versionCode = 5
         versionName = flutter.versionName
     }
 

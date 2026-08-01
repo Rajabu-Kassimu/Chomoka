@@ -374,6 +374,12 @@ abstract class AppLocalizations {
   /// **'Password setup complete!'**
   String get passwordSetupComplete;
 
+  /// No description provided for @completePreviousStepFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please complete the previous step first.'**
+  String get completePreviousStepFirst;
+
   /// No description provided for @finished.
   ///
   /// In en, this message translates to:

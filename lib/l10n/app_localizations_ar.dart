@@ -157,6 +157,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordSetupComplete => 'تم إعداد كلمة المرور بنجاح!';
 
   @override
+  String get completePreviousStepFirst => 'يرجى إكمال الخطوة السابقة أولاً.';
+
+  @override
   String get finished => 'انتهى';
 
   @override

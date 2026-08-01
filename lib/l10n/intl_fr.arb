@@ -55,6 +55,7 @@
   "fundInfo": "Informations sur le fonds",
   "passwordSetup": "Configuration du mot de passe",
   "passwordSetupComplete": "Configuration du mot de passe terminée !",
+  "completePreviousStepFirst": "Veuillez d'abord terminer l'étape précédente.",
   "finished": "Terminé",
   "groupInformation": "Informations du groupe",
   "editGroupInformation": "Modifier les informations du groupe",

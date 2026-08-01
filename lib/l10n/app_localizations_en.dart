@@ -159,6 +159,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordSetupComplete => 'Password setup complete!';
 
   @override
+  String get completePreviousStepFirst =>
+      'Please complete the previous step first.';
+
+  @override
   String get finished => 'Finished';
 
   @override

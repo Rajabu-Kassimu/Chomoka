@@ -69,39 +69,39 @@ class _WelcomePageState extends State<WelcomePage> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 255, 255),
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: Icon(Icons.build,
-                    color: const Color.fromARGB(255, 0, 0, 0)),
-                onPressed: () {
-                  // Add functionality if needed
-                },
-              ),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: const Color.fromARGB(255, 255, 255, 255),
+            //     shape: BoxShape.circle,
+            //   ),
+            //   child: IconButton(
+            //     icon: Icon(Icons.build,
+            //         color: const Color.fromARGB(255, 0, 0, 0)),
+            //     onPressed: () {
+            //       // Add functionality if needed
+            //     },
+            //   ),
+            // ),
             Spacer(),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                minimumSize: Size(0, 35),
-                padding: EdgeInsets.symmetric(horizontal: 20),
-              ),
-              onPressed: () {},
-              icon: Icon(
-                Icons.directions_run,
-                color: Colors.white,
-              ),
-              label: Text(
-                AppLocalizations.of(context)!.demo,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            // ElevatedButton.icon(
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.orange,
+            //     minimumSize: Size(0, 35),
+            //     padding: EdgeInsets.symmetric(horizontal: 20),
+            //   ),
+            //   onPressed: () {},
+            //   icon: Icon(
+            //     Icons.directions_run,
+            //     color: Colors.white,
+            //   ),
+            //   label: Text(
+            //     AppLocalizations.of(context)!.demo,
+            //     style: TextStyle(
+            //       color: Colors.white,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         centerTitle: true,

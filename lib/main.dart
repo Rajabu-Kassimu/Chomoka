@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
           return MaterialApp(
-            debugShowCheckedModeBanner: true,
+            debugShowCheckedModeBanner: false,
             title: 'Country Selection App',
             theme: ThemeData(
               primarySwatch: Colors.blue,

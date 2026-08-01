@@ -60,6 +60,7 @@
   "fundInfo": "معلومات الصندوق",
   "passwordSetup": "إعداد كلمة المرور",
   "passwordSetupComplete": "تم إعداد كلمة المرور بنجاح!",
+  "completePreviousStepFirst": "يرجى إكمال الخطوة السابقة أولاً.",
   "finished": "تم الانتهاء",
   "groupInformation": "معلومات المجموعة",
   "editGroupInformation": "تعديل معلومات المجموعة",

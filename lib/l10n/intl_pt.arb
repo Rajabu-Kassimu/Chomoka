@@ -52,6 +52,7 @@
   "fundInfo": "Informações do Fundo",
   "passwordSetup": "Configuração de Senha",
   "passwordSetupComplete": "Configuração de senha concluída!",
+  "completePreviousStepFirst": "Por favor, conclua a etapa anterior primeiro.",
   "finished": "Concluído",
   "groupInformation": "Informações do Grupo",
   "editGroupInformation": "Editar Informações do Grupo",

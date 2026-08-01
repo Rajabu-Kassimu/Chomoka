@@ -52,6 +52,7 @@
     "fundInfo": "Fund Information",
     "passwordSetup": "Password Setup",
     "passwordSetupComplete": "Password setup complete!",
+    "completePreviousStepFirst": "Please complete the previous step first.",
     "finished": "Finished",
     "groupInformation": "Group Information",
     "editGroupInformation": "Edit Group Information",

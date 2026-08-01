@@ -160,6 +160,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Configuration du mot de passe terminée !';
 
   @override
+  String get completePreviousStepFirst =>
+      'Veuillez d\'abord terminer l\'étape précédente.';
+
+  @override
   String get finished => 'Terminé';
 
   @override

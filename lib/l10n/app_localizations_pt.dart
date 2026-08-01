@@ -159,6 +159,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get passwordSetupComplete => 'Configuração de senha concluída!';
 
   @override
+  String get completePreviousStepFirst =>
+      'Por favor, conclua a etapa anterior primeiro.';
+
+  @override
   String get finished => 'Concluído';
 
   @override
