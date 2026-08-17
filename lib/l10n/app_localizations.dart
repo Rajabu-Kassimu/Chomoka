@@ -7677,6 +7677,60 @@ abstract class AppLocalizations {
   /// **'Please enter price'**
   String get requestInputPriceError;
 
+  /// No description provided for @requestInputUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get requestInputUnit;
+
+  /// No description provided for @requestInputUnitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select unit'**
+  String get requestInputUnitHint;
+
+  /// No description provided for @requestInputUnitKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Kg'**
+  String get requestInputUnitKg;
+
+  /// No description provided for @requestInputUnitTani.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonne'**
+  String get requestInputUnitTani;
+
+  /// No description provided for @requestInputUnitMifuko.
+  ///
+  /// In en, this message translates to:
+  /// **'Bags'**
+  String get requestInputUnitMifuko;
+
+  /// No description provided for @requestInputUnitOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Others'**
+  String get requestInputUnitOthers;
+
+  /// No description provided for @requestInputUnitCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Specify unit'**
+  String get requestInputUnitCustom;
+
+  /// No description provided for @requestInputUnitCustomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Example: Litres, Drums'**
+  String get requestInputUnitCustomHint;
+
+  /// No description provided for @requestSummaryUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get requestSummaryUnit;
+
   /// No description provided for @requestInputDate.
   ///
   /// In en, this message translates to:

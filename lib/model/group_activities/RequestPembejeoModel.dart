@@ -6,6 +6,7 @@ class RequestPembejeoModel extends BaseModel {
   int? userId;
   String? pembejeoType;
   String? amount;
+  String? unit;
   String? company;
   double? price;
   double? cost;
@@ -18,6 +19,7 @@ class RequestPembejeoModel extends BaseModel {
     this.userId,
     this.pembejeoType,
     this.amount,
+    this.unit,
     this.company,
     this.price,
     this.cost,
@@ -35,6 +37,7 @@ class RequestPembejeoModel extends BaseModel {
         'userId': 'INTEGER NULLABLE',
         'pembejeoType': 'TEXT NULLABLE',
         'amount': 'TEXT NULLABLE',
+        'unit': 'TEXT NULLABLE',
         'company': 'TEXT NULLABLE',
         'price': 'REAL NULLABLE',
         'cost': 'REAL NULLABLE',
@@ -50,6 +53,7 @@ class RequestPembejeoModel extends BaseModel {
       'userId': userId,
       'pembejeoType': pembejeoType,
       'amount': amount,
+      'unit': unit,
       'company': company,
       'price': price,
       'cost': cost,
@@ -66,6 +70,7 @@ class RequestPembejeoModel extends BaseModel {
       userId: map['userId'] as int?,
       pembejeoType: map['pembejeoType'] as String?,
       amount: map['amount'] as String?,
+      unit: map['unit'] as String?,
       company: map['company'] as String?,
       price: map['price'] as double?,
       cost: map['cost'] as double?,

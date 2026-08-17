@@ -242,7 +242,7 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                   _summaryItem(AppLocalizations.of(context)!.businessDashboardPurchases, _totalPurchases, Colors.blue),
                   _summaryItem(AppLocalizations.of(context)!.businessDashboardSales, _totalSales, Colors.green),
                   _summaryItem(AppLocalizations.of(context)!.businessDashboardExpenses, _totalExpenses, Colors.red),
-                  _summaryItem(AppLocalizations.of(context)!.businessDashboardProfit, _profit, _profit >= 0 ? Colors.orange : Colors.red),
+                  _summaryItem(AppLocalizations.of(context)!.businessDashboardProfit, _profit, _profit >= 0 ? Colors.orange : Colors.red, onTap: _showComingSoon),
                 ],
               ),
             ),
@@ -252,30 +252,53 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
     );
   }
 
-  Widget _summaryItem(String label, double value, Color color) {
+  Widget _summaryItem(String label, double value, Color color,
+      {VoidCallback? onTap}) {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            NumberFormat('#,###').format(value),
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: color,
-              fontSize: 14,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              NumberFormat('#,###').format(value),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: color,
+                fontSize: 14,
+              ),
             ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 11,
-              color: Colors.grey[700],
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey[700],
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  void _showComingSoon() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Coming soon'),
+          content: const Text('This feature is coming soon.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 

@@ -231,11 +231,32 @@ abstract class BaseModel {
           "SELECT name FROM sqlite_master WHERE type='table' AND name='$tableName'");
       if (existingTables.isEmpty) {
         await _createTableIfNotExists(db, this);
+      } else {
+        await _addMissingColumns(db);
       }
     } catch (e) {
       _clearQuery();
       print('Error checking or creating table $tableName: $e');
       rethrow;
+    }
+  }
+
+  // Adds any columns declared in `columns` that are missing from an existing
+  // table (SQLite's CREATE TABLE IF NOT EXISTS does not alter old tables).
+  Future<void> _addMissingColumns(Database db) async {
+    try {
+      final existingColumns = await db.rawQuery('PRAGMA table_info($tableName)');
+      final existingNames =
+          existingColumns.map((c) => c['name'] as String).toSet();
+      for (final entry in columns.entries) {
+        if (!existingNames.contains(entry.key)) {
+          final type = entry.value.replaceAll('NULLABLE', '').trim();
+          await db.execute(
+              'ALTER TABLE $tableName ADD COLUMN ${entry.key} $type');
+        }
+      }
+    } catch (e) {
+      print('Error adding missing columns to $tableName: $e');
     }
   }
 

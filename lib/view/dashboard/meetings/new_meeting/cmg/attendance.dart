@@ -12,6 +12,7 @@ import '../../../../../../widget/widget.dart';
 import 'package:chomoka/model/BaseModel.dart'; // Add this import
 import 'package:chomoka/l10n/app_localizations.dart';
 
+const Color _kPrimary = Color(0xFF2A27F1);
 
 class AttendancePage extends StatefulWidget {
   final int meetingId;
@@ -547,7 +548,7 @@ class _AttendancePageState extends State<AttendancePage> {
               width: double.infinity,
               height: 50,
               child: CustomButton(
-                color: Color.fromARGB(255, 4, 34, 207),
+                color: _kPrimary,
                 buttonText: l10n.confirm,
                 onPressed: () {
                   if (widget.isFromMeetingSummary) {
@@ -652,39 +653,94 @@ class MemberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final String? status = member['status'] as String?;
+    final String? subStatus = member['sub_attendance_status'] as String?;
+
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 6.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       elevation: 2,
       child: ExpansionTile(
         leading: CircleAvatar(
-          radius: 25,
-          backgroundColor: Colors.blueGrey.shade100,
-          child: Icon(Icons.person, size: 30, color: Colors.blueGrey.shade700),
+          radius: 24,
+          backgroundColor: _kPrimary.withOpacity(0.1),
+          child: const Icon(Icons.person, size: 26, color: _kPrimary),
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Row(
           children: [
-            Text(
-              member['name'],
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+            Expanded(
+              child: Text(
+                member['name'],
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 16.0),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            SizedBox(height: 4),
-            Text(
-              'Member #: ${member['memberNumber']}',
-              style: TextStyle(color: Colors.grey[700]),
-            ),
+            const SizedBox(width: 8),
+            _buildStatusBadge(status, l10n),
           ],
+        ),
+        subtitle: Text(
+          'Member #: ${member['memberNumber']}',
+          style: TextStyle(color: Colors.grey[600], fontSize: 13),
         ),
         children: [
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: AttendanceOptions(
-              status: member['status'],
-              subStatus: member['sub_attendance_status'],
+              status: status,
+              subStatus: subStatus,
               onToggleStatus: onToggleStatus,
               onSetDetail: onSetDetail,
               memberName: member['name'],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusBadge(String? status, AppLocalizations l10n) {
+    final Color color;
+    final IconData icon;
+    final String label;
+
+    switch (status) {
+      case 'Yupo':
+        color = Colors.green;
+        icon = Icons.check_circle;
+        label = l10n.present;
+        break;
+      case 'Hayupo':
+        color = Colors.red;
+        icon = Icons.cancel;
+        label = l10n.absent;
+        break;
+      default:
+        color = Colors.grey;
+        icon = Icons.help_outline;
+        label = '...';
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -717,50 +773,21 @@ class AttendanceOptions extends StatelessWidget {
       children: [
         // Attendance Status Buttons
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: () => onToggleStatus('Yupo'),
-              icon: Icon(
-                Icons.check_circle,
-                color: status == 'Yupo' ? Colors.green : Colors.grey,
-              ),
-              label: Text(
-                l10n.present,
-                style: TextStyle(
-                  color: status == 'Yupo' ? Colors.green : Colors.grey,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                side: BorderSide(
-                  color: status == 'Yupo' ? Colors.green : Colors.grey,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+            _buildStatusButton(
+              icon: Icons.check_circle,
+              label: l10n.present,
+              color: Colors.green,
+              isSelected: status == 'Yupo',
+              onTap: () => onToggleStatus('Yupo'),
             ),
-            SizedBox(width: 12),
-            ElevatedButton.icon(
-              onPressed: () => onToggleStatus('Hayupo'),
-              icon: Icon(
-                Icons.cancel,
-                color: status == 'Hayupo' ? Colors.red : Colors.grey,
-              ),
-              label: Text(
-                l10n.absent,
-                style: TextStyle(
-                  color: status == 'Hayupo' ? Colors.red : Colors.grey,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                side: BorderSide(
-                  color: status == 'Hayupo' ? Colors.red : Colors.grey,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+            const SizedBox(width: 12),
+            _buildStatusButton(
+              icon: Icons.cancel,
+              label: l10n.absent,
+              color: Colors.red,
+              isSelected: status == 'Hayupo',
+              onTap: () => onToggleStatus('Hayupo'),
             ),
           ],
         ),
@@ -852,6 +879,52 @@ class AttendanceOptions extends StatelessWidget {
       ],
     );
   }
+
+  Widget _buildStatusButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: Material(
+        color: isSelected ? color : color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(24),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(24),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: color, width: 1.2),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 18, color: isSelected ? Colors.white : color),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: isSelected ? Colors.white : color,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class CustomChoiceChip extends StatelessWidget {
@@ -871,6 +944,9 @@ class CustomChoiceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
+      avatar: isSelected
+          ? Icon(Icons.check, size: 16, color: Colors.black87)
+          : null,
       label: Text(label),
       selected: isSelected,
       onSelected: (_) => onSelected(),

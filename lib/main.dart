@@ -10,12 +10,17 @@ import 'package:chomoka/view/pre_page/welcom_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'l10n/app_localizations.dart'; 
 import 'package:provider/provider.dart';
 import 'package:chomoka/providers/currency_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize date symbols for all supported locales so DateFormat(...)
+  // works in release builds regardless of the device locale.
+  await initializeDateFormatting();
 
   if (defaultTargetPlatform == TargetPlatform.android ||
       defaultTargetPlatform == TargetPlatform.iOS) {
@@ -110,7 +115,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
           return MaterialApp(
-            debugShowCheckedModeBanner: true,
+            debugShowCheckedModeBanner: false,
             title: 'Country Selection App',
             theme: ThemeData(
               primarySwatch: Colors.blue,

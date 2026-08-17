@@ -4126,6 +4126,33 @@ class AppLocalizationsSw extends AppLocalizations {
   String get requestInputPriceError => 'Tafadhali ingiza bei';
 
   @override
+  String get requestInputUnit => 'Kipimo';
+
+  @override
+  String get requestInputUnitHint => 'Chagua kipimo';
+
+  @override
+  String get requestInputUnitKg => 'Kg';
+
+  @override
+  String get requestInputUnitTani => 'Tani';
+
+  @override
+  String get requestInputUnitMifuko => 'Mifuko';
+
+  @override
+  String get requestInputUnitOthers => 'Nyingine';
+
+  @override
+  String get requestInputUnitCustom => 'Taja kipimo';
+
+  @override
+  String get requestInputUnitCustomHint => 'Mfano: Lita, Pipa';
+
+  @override
+  String get requestSummaryUnit => 'Kipimo';
+
+  @override
   String get requestInputDate => 'Tarehe';
 
   @override

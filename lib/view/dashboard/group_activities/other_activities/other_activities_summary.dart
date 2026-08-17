@@ -16,6 +16,8 @@ class OtherActivitiesSummary extends StatefulWidget {
 }
 
 class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
+  static const Color _primary = Color(0xFF2A27F1);
+
   bool _isLoading = true;
   List<ShughuliMbalimbaliModel> _activities = [];
 
@@ -92,7 +94,7 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
             _loadActivities();
           }
         },
-        backgroundColor: const Color.fromARGB(255, 42, 39, 241),
+        backgroundColor: _primary,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -100,29 +102,27 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
 
   Widget _buildEmptyState(AppLocalizations l10n) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-      ),
+      color: Colors.grey[50],
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.blue[50],
+                color: _primary.withOpacity(0.08),
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.event_note_outlined,
-                size: 80,
-                color: Color.fromARGB(255, 42, 39, 241),
+                size: 72,
+                color: _primary,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               l10n.noActivitiesSaved,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF333333),
@@ -158,7 +158,7 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
               icon: const Icon(Icons.add),
               label: Text(l10n.addOtherActivityTitle),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 42, 39, 241),
+                backgroundColor: _primary,
                 foregroundColor: Colors.white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -180,197 +180,22 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.activityListTitle,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[800],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  l10n.totalActivities(_activities.length.toString()),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
+          _buildSummaryHeader(
+            icon: Icons.event_note_outlined,
+            title: l10n.activityListTitle,
+            subtitle: l10n.totalActivities(_activities.length.toString()),
           ),
 
           Expanded(
             child: RefreshIndicator(
               onRefresh: _loadActivities,
-              color: const Color.fromARGB(255, 42, 39, 241),
+              color: _primary,
               child: ListView.builder(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 88),
                 itemCount: _activities.length,
                 itemBuilder: (context, index) {
                   final activity = _activities[index];
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.only(bottom: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 42, 39, 241)
-                                .withOpacity(0.1),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(0),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 8),
-                                    height: 40,
-                                child: Expanded(
-                                  child: Text(
-                                    (activity.activityName)?.toUpperCase() ??
-                                        'Shughuli',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 42, 39, 241),
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  activity.activityDate != null
-                                      ? DateFormat('dd MMM yyyy').format(
-                                          DateTime.parse(
-                                              activity.activityDate!))
-                                      : 'Tarehe haijulikani',
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 42, 39, 241),
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildInfoItemWithSubtitle(
-                                Icons.people,
-                                'Idadi ya Wanufaika',
-                                '${activity.beneficiariesCount ?? 0}',
-                              ),
-                              const SizedBox(height: 12),
-
-                              _buildInfoItemWithSubtitle(
-                                Icons.location_on,
-                                'Eneo',
-                                activity.location ?? 'Halijulikani',
-                              ),
-
-                              const SizedBox(height: 12),
-                              const Divider(height: 1),
-
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton.icon(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => AddOtherActivities(
-                                              mzungukoId: widget.mzungukoId,
-                                              activityToEdit: activity,
-                                            ),
-                                          ),
-                                        ).then((result) {
-                                          if (result == true) {
-                                            _loadActivities();
-                                          }
-                                        });
-                                      },
-                                      icon: const Icon(Icons.edit,
-                                          size: 16,
-                                          color:
-                                              Color.fromARGB(255, 42, 39, 241)),
-                                      label: const Text(
-                                        'Hariri',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 42, 39, 241),
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                      style: TextButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        minimumSize: Size.zero,
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    TextButton.icon(
-                                      onPressed: () {
-                                        _deleteActivity(activity);
-                                      },
-                                      icon: const Icon(Icons.delete,
-                                          size: 16, color: Colors.red),
-                                      label: const Text(
-                                        'Futa',
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                                      style: TextButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        minimumSize: Size.zero,
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                  return _buildActivityCard(activity);
                 },
               ),
             ),
@@ -380,18 +205,252 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
     );
   }
 
+  Widget _buildSummaryHeader({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+  }) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [_primary, _primary.withOpacity(0.82)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: _primary.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: Colors.white, size: 26),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActivityCard(ShughuliMbalimbaliModel activity) {
+    final date = _formatDate(activity.activityDate);
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.only(bottom: 14),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Card header
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            color: _primary.withOpacity(0.06),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.event_note_outlined,
+                    color: _primary,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    (activity.activityName)?.toUpperCase() ?? 'Shughuli',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: _primary,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                _buildDateChip(date),
+              ],
+            ),
+          ),
+
+          // Card body
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildInfoItemWithSubtitle(
+                  Icons.people_alt_outlined,
+                  'Idadi ya Wanufaika',
+                  '${activity.beneficiariesCount ?? 0}',
+                ),
+                const SizedBox(height: 14),
+                _buildInfoItemWithSubtitle(
+                  Icons.location_on_outlined,
+                  'Eneo',
+                  activity.location ?? 'Halijulikani',
+                ),
+                const SizedBox(height: 8),
+                const Divider(height: 1),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddOtherActivities(
+                              mzungukoId: widget.mzungukoId,
+                              activityToEdit: activity,
+                            ),
+                          ),
+                        ).then((result) {
+                          if (result == true) {
+                            _loadActivities();
+                          }
+                        });
+                      },
+                      icon: const Icon(Icons.edit, size: 16, color: _primary),
+                      label: const Text(
+                        'Hariri',
+                        style: TextStyle(color: _primary, fontSize: 13),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    TextButton.icon(
+                      onPressed: () {
+                        _deleteActivity(activity);
+                      },
+                      icon: const Icon(Icons.delete, size: 16, color: Colors.red),
+                      label: const Text(
+                        'Futa',
+                        style: TextStyle(color: Colors.red, fontSize: 13),
+                      ),
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDateChip(String date) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.calendar_today_outlined, size: 13, color: _primary),
+          const SizedBox(width: 5),
+          Text(
+            date,
+            style: const TextStyle(
+              color: _primary,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatDate(String? dateString) {
+    if (dateString == null || dateString.isEmpty) {
+      return 'Tarehe haijulikani';
+    }
+    try {
+      return DateFormat('dd MMM yyyy').format(DateTime.parse(dateString));
+    } catch (_) {
+      return dateString;
+    }
+  }
+
   Widget _buildInfoItemWithSubtitle(
       IconData icon, String subtitle, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(6),
+            color: _primary.withOpacity(0.08),
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, size: 16, color: Colors.black),
+          child: Icon(icon, size: 18, color: _primary),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -410,7 +469,8 @@ class _OtherActivitiesSummaryState extends State<OtherActivitiesSummary> {
                 value,
                 style: const TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF333333),
                 ),
               ),
             ],

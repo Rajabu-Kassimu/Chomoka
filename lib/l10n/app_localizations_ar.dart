@@ -4078,6 +4078,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get requestInputPriceError => 'يرجى إدخال السعر';
 
   @override
+  String get requestInputUnit => 'الوحدة';
+
+  @override
+  String get requestInputUnitHint => 'اختر الوحدة';
+
+  @override
+  String get requestInputUnitKg => 'كغ';
+
+  @override
+  String get requestInputUnitTani => 'طن';
+
+  @override
+  String get requestInputUnitMifuko => 'أكياس';
+
+  @override
+  String get requestInputUnitOthers => 'أخرى';
+
+  @override
+  String get requestInputUnitCustom => 'حدد الوحدة';
+
+  @override
+  String get requestInputUnitCustomHint => 'مثال: لتر، برميل';
+
+  @override
+  String get requestSummaryUnit => 'الوحدة';
+
+  @override
   String get requestInputDate => 'التاريخ';
 
   @override

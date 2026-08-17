@@ -354,6 +354,16 @@ class _RequestPembejeoSummaryState extends State<RequestPembejeoSummary> {
                                 padding: EdgeInsets.symmetric(vertical: 8),
                                 child: Divider(height: 1),
                               ),
+                              // Kipimo (unit)
+                              _buildCompactDetailItem(
+                                AppLocalizations.of(context)!.requestSummaryUnit,
+                                request.unit ?? AppLocalizations.of(context)!.requestSummaryUnknown,
+                                Icons.straighten,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: Divider(height: 1),
+                              ),
                               // Date
                               _buildCompactDetailItem(
                                 AppLocalizations.of(context)!.requestSummaryRequestDate,
@@ -378,18 +388,6 @@ class _RequestPembejeoSummaryState extends State<RequestPembejeoSummary> {
                                 AppLocalizations.of(context)!.requestSummaryCompany,
                                 request.company ?? AppLocalizations.of(context)!.requestSummaryUnknown,
                                 Icons.business_outlined,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                child: Divider(height: 1),
-                              ),
-                              // Price
-                              _buildCompactDetailItem(
-                                AppLocalizations.of(context)!.requestSummaryPrice,
-                                request.price != null
-                                    ? 'TZS ${NumberFormat("#,###").format(request.price)}'
-                                    : AppLocalizations.of(context)!.requestSummaryUnknown,
-                                Icons.attach_money_outlined,
                               ),
                               if (request.cost != null) ...[
                                 const Padding(
@@ -748,17 +746,15 @@ class _RequestPembejeoSummaryState extends State<RequestPembejeoSummary> {
                               ),
                               const SizedBox(height: 12),
                               _buildInfoItem(
-                                Icons.business,
-                                AppLocalizations.of(context)!.requestSummaryCompany,
-                                request.company ?? AppLocalizations.of(context)!.requestSummaryUnknown,
+                                Icons.straighten,
+                                AppLocalizations.of(context)!.requestSummaryUnit,
+                                request.unit ?? AppLocalizations.of(context)!.requestSummaryUnknown,
                               ),
                               const SizedBox(height: 12),
                               _buildInfoItem(
-                                Icons.attach_money,
-                                AppLocalizations.of(context)!.requestSummaryPrice,
-                                request.price != null
-                                    ? 'TZS ${NumberFormat("#,###").format(request.price)}'
-                                    : AppLocalizations.of(context)!.requestSummaryUnknown,
+                                Icons.business,
+                                AppLocalizations.of(context)!.requestSummaryCompany,
+                                request.company ?? AppLocalizations.of(context)!.requestSummaryUnknown,
                               ),
                               const SizedBox(height: 12),
                               _buildInfoItem(

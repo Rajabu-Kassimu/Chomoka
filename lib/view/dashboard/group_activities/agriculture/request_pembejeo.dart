@@ -29,7 +29,11 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
   final TextEditingController _pembejeoTypeController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _customUnitController = TextEditingController();
+
+  // Unit (Kipimo) values (stable values stored in DB)
+  final List<String> _unitValues = ['Kg', 'Tani', 'Mifuko', 'Nyingine'];
+  String? _selectedUnit;
 
   // Status dropdown for editing
   String _selectedStatus = 'pending';
@@ -48,7 +52,15 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
       _pembejeoTypeController.text = widget.existingRequest!.pembejeoType ?? '';
       _amountController.text = widget.existingRequest!.amount ?? '';
       _companyController.text = widget.existingRequest!.company ?? '';
-      _priceController.text = widget.existingRequest!.price?.toString() ?? '';
+
+      // Restore the saved unit (preset or custom "Nyingine")
+      final savedUnit = widget.existingRequest!.unit;
+      if (savedUnit != null && _unitValues.contains(savedUnit)) {
+        _selectedUnit = savedUnit;
+      } else if (savedUnit != null && savedUnit.isNotEmpty) {
+        _selectedUnit = 'Nyingine';
+        _customUnitController.text = savedUnit;
+      }
 
       // Set the selected status
       _selectedStatus = widget.existingRequest!.status ?? 'pending';
@@ -65,7 +77,7 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
     _pembejeoTypeController.dispose();
     _amountController.dispose();
     _companyController.dispose();
-    _priceController.dispose();
+    _customUnitController.dispose();
     super.dispose();
   }
 
@@ -74,7 +86,9 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
     if (_pembejeoTypeController.text.isEmpty ||
         _amountController.text.isEmpty ||
         _companyController.text.isEmpty ||
-        _priceController.text.isEmpty) {
+        _selectedUnit == null ||
+        (_selectedUnit == 'Nyingine' &&
+            _customUnitController.text.trim().isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(AppLocalizations.of(context)!.requestInputFillAll)),
       );
@@ -131,7 +145,7 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
           'pembejeoType': _pembejeoTypeController.text,
           'amount': _amountController.text,
           'company': _companyController.text,
-          'price': double.tryParse(_priceController.text),
+          'unit': _getSelectedUnit(),
           'requestDate': DateFormat('yyyy-MM-dd').format(_selectedDate),
           'status': _selectedStatus, // Update status
         };
@@ -140,7 +154,7 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
         request.pembejeoType = _pembejeoTypeController.text;
         request.amount = _amountController.text;
         request.company = _companyController.text;
-        request.price = double.tryParse(_priceController.text);
+        request.unit = _getSelectedUnit();
         request.requestDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
         request.status = _selectedStatus;
 
@@ -165,7 +179,7 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
           pembejeoType: _pembejeoTypeController.text,
           amount: _amountController.text,
           company: _companyController.text,
-          price: double.tryParse(_priceController.text),
+          unit: _getSelectedUnit(),
           requestDate: DateFormat('yyyy-MM-dd').format(_selectedDate),
           status: 'pending', // New requests are always pending
         );
@@ -274,20 +288,37 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
 
                   const SizedBox(height: 16),
 
-                  // Price
-                  CustomTextField(
-                    labelText: AppLocalizations.of(context)!.requestInputPrice,
-                    hintText: AppLocalizations.of(context)!.requestInputPriceHint,
-                    controller: _priceController,
-                    keyboardType: TextInputType.number,
-                    aboveText: AppLocalizations.of(context)!.requestInputPrice,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.requestInputPriceError;
-                      }
-                      return null;
+                  // Kipimo (unit of measurement)
+                  CustomDropdown<String>(
+                    labelText: AppLocalizations.of(context)!.requestInputUnit,
+                    hintText: AppLocalizations.of(context)!.requestInputUnitHint,
+                    aboveText: AppLocalizations.of(context)!.requestInputUnit,
+                    value: _selectedUnit,
+                    items: _unitValues.map((String unit) {
+                      return DropdownMenuItem<String>(
+                        value: unit,
+                        child: Text(_unitLabel(unit, AppLocalizations.of(context)!)),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedUnit = newValue;
+                      });
                     },
                   ),
+
+                  if (_selectedUnit == 'Nyingine') ...[
+                    const SizedBox(height: 16),
+                    CustomTextField(
+                      labelText: AppLocalizations.of(context)!.requestInputUnitCustom,
+                      hintText: AppLocalizations.of(context)!.requestInputUnitCustomHint,
+                      controller: _customUnitController,
+                      aboveText: AppLocalizations.of(context)!.requestInputUnitCustom,
+                      validator: (value) {
+                        return null;
+                      },
+                    ),
+                  ],
 
                   const SizedBox(height: 16),
 
@@ -343,6 +374,31 @@ class _RequestPembejeoState extends State<RequestPembejeo> {
               ),
             ),
     );
+  }
+
+  // Resolve the selected unit, using the custom text when "Nyingine" is chosen.
+  String? _getSelectedUnit() {
+    if (_selectedUnit == 'Nyingine') {
+      final custom = _customUnitController.text.trim();
+      return custom.isEmpty ? null : custom;
+    }
+    return _selectedUnit;
+  }
+
+  // Localized display label for a stored unit value.
+  String _unitLabel(String unit, AppLocalizations l10n) {
+    switch (unit) {
+      case 'Kg':
+        return l10n.requestInputUnitKg;
+      case 'Tani':
+        return l10n.requestInputUnitTani;
+      case 'Mifuko':
+        return l10n.requestInputUnitMifuko;
+      case 'Nyingine':
+        return l10n.requestInputUnitOthers;
+      default:
+        return unit;
+    }
   }
 
   // Helper method to get display name for status

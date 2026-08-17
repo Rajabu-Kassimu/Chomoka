@@ -315,6 +315,8 @@ class _VslaMeetingSummaryPageState extends State<VslaMeetingSummaryPage> {
             kawahi++;
           } else if (subStatus == 'Kachelewa') {
             kachelewa++;
+          } else if (subStatus == 'Katuma Mwakilishi') {
+            representative++;
           }
         } else if (status == 'Hayupo') {
           absentMembers++;
@@ -322,8 +324,6 @@ class _VslaMeetingSummaryPageState extends State<VslaMeetingSummaryPage> {
             withPermission++;
           } else if (subStatus == 'Bila Ruhusa') {
             withoutPermission++;
-          } else if (subStatus == 'Katuma Mwakilishi') {
-            representative++;
           }
         }
       }

@@ -4160,6 +4160,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get requestInputPriceError => 'Veuillez entrer le prix';
 
   @override
+  String get requestInputUnit => 'Unité';
+
+  @override
+  String get requestInputUnitHint => 'Sélectionnez l\'unité';
+
+  @override
+  String get requestInputUnitKg => 'Kg';
+
+  @override
+  String get requestInputUnitTani => 'Tonne';
+
+  @override
+  String get requestInputUnitMifuko => 'Sacs';
+
+  @override
+  String get requestInputUnitOthers => 'Autres';
+
+  @override
+  String get requestInputUnitCustom => 'Précisez l\'unité';
+
+  @override
+  String get requestInputUnitCustomHint => 'Exemple : Litres, Fûts';
+
+  @override
+  String get requestSummaryUnit => 'Unité';
+
+  @override
   String get requestInputDate => 'Date';
 
   @override

@@ -2,6 +2,7 @@ import 'package:chomoka/model/syncData.dart';
 import 'package:chomoka/view/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'dart:async';
 import 'package:chomoka/l10n/app_localizations.dart';
 
 
@@ -93,7 +94,9 @@ class _SuccessSplashPageState extends State<SuccessSplashPage>
 
       try {
         var syncdt = Syncdata();
-        await syncdt.syncAllTables();
+        // Run the sync in the background so the success screen and navigation
+        // stay responsive instead of blocking on a slow network sync.
+        unawaited(syncdt.syncAllTables());
 
         setState(() {
           statusMessage = l10n.dataSavedSuccessfully;
