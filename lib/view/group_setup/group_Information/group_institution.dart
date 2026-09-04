@@ -81,6 +81,8 @@ class _GroupInstitutionState extends State<GroupInstitution> {
     'WWF': [
       DropdownMenuItem(value: 'Land for Life', child: Text('Land for Life')),
       DropdownMenuItem(value: 'RUMAKI', child: Text('RUMAKI')),
+      DropdownMenuItem(
+          value: 'Water Towers Landscape', child: Text('Water Towers Landscape')),
       DropdownMenuItem(value: 'Nyingine', child: Text('Nyingine')),
     ],
     'SNV Kenya': [
