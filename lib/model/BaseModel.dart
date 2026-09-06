@@ -6,6 +6,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 
+enum SyncResult { success, noData, failure }
+
 abstract class BaseModel {
   static Database? _database;
   // Use instance-level where clauses and args to avoid cross-instance
@@ -245,14 +247,15 @@ abstract class BaseModel {
   // table (SQLite's CREATE TABLE IF NOT EXISTS does not alter old tables).
   Future<void> _addMissingColumns(Database db) async {
     try {
-      final existingColumns = await db.rawQuery('PRAGMA table_info($tableName)');
+      final existingColumns =
+          await db.rawQuery('PRAGMA table_info($tableName)');
       final existingNames =
           existingColumns.map((c) => c['name'] as String).toSet();
       for (final entry in columns.entries) {
         if (!existingNames.contains(entry.key)) {
           final type = entry.value.replaceAll('NULLABLE', '').trim();
-          await db.execute(
-              'ALTER TABLE $tableName ADD COLUMN ${entry.key} $type');
+          await db
+              .execute('ALTER TABLE $tableName ADD COLUMN ${entry.key} $type');
         }
       }
     } catch (e) {
@@ -285,43 +288,61 @@ abstract class BaseModel {
     await ensureDatabaseInitialized();
   }
 
-  Future<void> syncAllTables() async {
+  Future<SyncResult> syncAllTables(
+      {void Function(int progress)? onProgress}) async {
     try {
       await ensureDatabaseInitialized();
       final db = await _db;
       final tables = await db.rawQuery(
           "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE 'android_%'");
       //fetch group identity
-      final groups_identity = await db.query('groups_identity', limit: 1);
-      if (groups_identity.isEmpty) {
-        return;
+      final groupsIdentity = await db.query('groups_identity', limit: 1);
+      if (groupsIdentity.isEmpty) {
+        onProgress?.call(100);
+        return SyncResult.noData;
       }
-      //proceed with sync
-      for (var table in tables) {
-        final tableName = table['name'];
-        if (tableName != null && tableName is String) {
-          final rowsToSync = await db.query(
-            tableName,
-            where: 'synced_at IS NULL',
-          );
-          if (tableName == 'groups_identity') {
-            continue;
-          }
-          if (rowsToSync.isNotEmpty) {
-            final data_rows = {
-              'data': {'table': tableName, 'result': rowsToSync},
-              'groups_identity': groups_identity
-            };
 
-            var data_json = jsonEncode(data_rows);
-            final response = await http.post(
-              Uri.parse('https://vsla.chomokaplus.com/api/sync'),
-              // Uri.parse('http://192.168.6.20:10000/api/sync'),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: data_json,
-            );
+      // Only tables other than groups_identity need to be pushed online.
+      final tablesToSync = tables.where((table) {
+        final name = table['name'];
+        return name is String && name != 'groups_identity';
+      }).toList();
+
+      if (tablesToSync.isEmpty) {
+        onProgress?.call(100);
+        return SyncResult.success;
+      }
+
+      var completed = 0;
+      var failed = 0;
+
+      //proceed with sync
+      for (var table in tablesToSync) {
+        final tableName = table['name'] as String;
+        final rowsToSync = await db.query(
+          tableName,
+          where: 'synced_at IS NULL',
+        );
+
+        if (rowsToSync.isNotEmpty) {
+          final dataRows = {
+            'data': {'table': tableName, 'result': rowsToSync},
+            'groups_identity': groupsIdentity
+          };
+
+          var dataJson = jsonEncode(dataRows);
+          try {
+            final response = await http
+                .post(
+                  Uri.parse('https://vsla.chomokaplus.com/api/sync'),
+                  // Uri.parse('https://vsla.chomokaplus.com/api/sync'),
+                  // Uri.parse('http://192.168.6.20:10000/api/sync'),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: dataJson,
+                )
+                .timeout(const Duration(seconds: 30));
 
             if (response.statusCode == 200) {
               print('Data synced successfully for table $tableName');
@@ -334,14 +355,24 @@ abstract class BaseModel {
                 );
               }
             } else {
+              failed++;
               print(
                   'Failed to sync data for table $tableName: ${response.body}');
             }
+          } catch (e) {
+            failed++;
+            print('Error syncing table $tableName: $e');
           }
         }
+
+        completed++;
+        onProgress?.call(((completed / tablesToSync.length) * 100).round());
       }
+
+      return failed == 0 ? SyncResult.success : SyncResult.failure;
     } catch (e) {
       print('Error during syncing: $e');
+      return SyncResult.failure;
     }
   }
 

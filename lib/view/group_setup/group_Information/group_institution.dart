@@ -350,8 +350,7 @@ class _GroupInstitutionState extends State<GroupInstitution> {
                           aboveText:
                               AppLocalizations.of(context)!.selectProject,
                         ),
-
-                      // Update conditions for showing text field
+                      // Update conditions for sohwing text field
                       if ((_selectedProject == 'Nyingine' &&
                               (_selectedOrganization == 'Helvetas' ||
                                   _selectedOrganization == 'CARE' ||
